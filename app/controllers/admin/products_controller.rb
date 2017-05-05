@@ -1,4 +1,8 @@
 class Admin::ProductsController < ApplicationController
+before_action :authenticate_user!
+before_action :admin_required
+layout "admin"
+
   def index
     @products = Product.all
   end
@@ -14,7 +18,7 @@ class Admin::ProductsController < ApplicationController
   def destory
     @product = Product.find(params[:id])
     @product.destroy
-    redirect_to admin_products_path    
+    redirect_to admin_products_path, alert: "Delete Successful"
   end
 
   def create
